@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Clicker Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-image: url('https://wallpapercave.com/wp/wp2561675.jpg');
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #6a1b9a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .button:hover {
+            background-color: #4a148c;
+        }
+        .disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+        .stats {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .rank {
+            margin-top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Harry Potter Clicker Game</h1>
+    <p>Collect as much magical energy as you can by clicking the button!</p>
+    <button class="button" id="magicButton">Cast Spell</button>
+    <div class="stats" id="stats"></div>
+    <div class="rank" id="rank"></div>
+    <div id="upgrades">
+        <button class="button disabled" id="upgrade1" disabled>+1 CPS (100 Magic Points)</button>
+        <button class="button disabled" id="upgrade2" disabled>+5 CPS (500 Magic Points)</button>
+        <button class="button disabled" id="upgrade3" disabled>+10 CPS (1000 Magic Points)</button>
+        <button class="button disabled" id="upgrade4" disabled>+50 CPS (10000 Magic Points)</button>
+        <button class="button disabled" id="upgrade5" disabled>+100 CPS (100000 Magic Points)</button>
+        <button class="button disabled" id="upgrade6" disabled>+1000 CPS (1,000,000 Magic Points)</button>
+        <button class="button disabled" id="upgrade7" disabled>+10000 CPS (100,000,000 Magic Points)</button>
+    </div>
+
+    <script>
+        let magicPoints = 0;
+        let rank = "Muggle";
+        let cps = 0; // Clicks per second
+
+        const magicButton = document.getElementById('magicButton');
+        const statsDiv = document.getElementById('stats');
+        const rankDiv = document.getElementById('rank');
+        const upgrade1 = document.getElementById('upgrade1');
+        const upgrade2 = document.getElementById('upgrade2');
+        const upgrade3 = document.getElementById('upgrade3');
+        const upgrade4 = document.getElementById('upgrade4');
+        const upgrade5 = document.getElementById('upgrade5');
+        const upgrade6 = document.getElementById('upgrade6');
+        const upgrade7 = document.getElementById('upgrade7');
+
+        function updateRank() {
+            if (magicPoints < 50) {
+                rank = "Muggle";
+            } else if (magicPoints < 100) {
+                rank = "Hogwarts Student";
+            } else if (magicPoints < 200) {
+                rank = "Auror";
+            } else if (magicPoints < 500) {
+                rank = "Order of the Phoenix Member";
+            } else if (magicPoints < 1000) {
+                rank = "Dumbledore's Army Leader";
+            } else if (magicPoints < 100000) {
+                rank = "Master Wizard";
+            } else if (magicPoints < 1000000) {
+                rank = "Grand Sorcerer";
+            } else if (magicPoints < 100000000) {
+                rank = "Supreme Magus";
+            } else {
+                rank = "Immortal Archmage";
+            }
+        }
+
+        function unlockUpgrades() {
+            if (magicPoints >= 100) {
+                upgrade1.disabled = false;
+                upgrade1.classList.remove('disabled');
+            }
+            if (magicPoints >= 500) {
+                upgrade2.disabled = false;
+                upgrade2.classList.remove('disabled');
+            }
+            if (magicPoints >= 1000) {
+                upgrade3.disabled = false;
+                upgrade3.classList.remove('disabled');
+            }
+            if (magicPoints >= 10000) {
+                upgrade4.disabled = false;
+                upgrade4.classList.remove('disabled');
+            }
+            if (magicPoints >= 100000) {
+                upgrade5.disabled = false;
+                upgrade5.classList.remove('disabled');
+            }
+            if (magicPoints >= 1000000) {
+                upgrade6.disabled = false;
+                upgrade6.classList.remove('disabled');
+            }
+            if (magicPoints >= 100000000) {
+                upgrade7.disabled = false;
+        magicButton.addEventListener('click', () => {
+            magicPoints++;
+            updateRank();
+            unlockUpgrades();
+
+            statsDiv.textContent = `Magic Points: ${magicPoints}`;
+            rankDiv.textContent = `Rank: ${rank}`;
+        });
+
+        upgrade1.addEventListener('click', () => {
+            if (magicPoints >= 100) {
+                magicPoints -= 100;
+                cps += 1;
+                unlockUpgrades();
+            }
+        });
+
+        upgrade2.addEventListener('click', () => {
+            if (magicPoints >= 500) {
+                magicPoints -= 500;
+                cps += 5;
+                unlockUpgrades();
+            }
+        });
+
+        upgrade3.addEventListener('click', () => {
+            if (magicPoints >= 1000) {
+                magicPoints -= 1000;
+                cps += 10;
+                unlockUpgrades();
+            }
+        });
+
+        upgrade4.addEventListener('click', () => {
+            if (magicPoints >= 10000) {
+                magicPoints -= 10000;
+                cps += 50;
+                unlockUpgrades();
+            }
+        });
+
+        setInterval(addCps, 1000); // Adds CPS every second
+    </script>
+</body>
+</html>
